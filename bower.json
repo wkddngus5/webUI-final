@@ -1,0 +1,21 @@
+{
+  "name": "todo",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "brain <wkddngus5@naver.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "handlebars": "^4.0.10"
+  }
+}
