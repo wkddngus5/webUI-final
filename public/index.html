@@ -12,7 +12,11 @@
     <body>
         <article>
 
-            <div id="todo-zone"></div>
+            <table>
+                <tr id="todo-zone">
+                </tr>
+            </table>
+
 
             <div id="index-zone"></div>
 
@@ -22,25 +26,30 @@
         <script type="text/template" id="todo-template">
             {{#if todoElement}}
                 {{#each todoElement}}
-                    <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand">
-                            <h2 class="mdl-card__title-text">Update</h2>
+                    <td class="todo">
+                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                            <div class="mdl-card__title mdl-card--expand">
+                                <h2 class="mdl-card__title-text">{{todo}}</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                {{date}}
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect completed-button">
+                                    {{#if completed}}
+                                        COMPLETED
+                                    {{else}}
+                                        NOT_COMPLETED
+                                    {{/if}}
+                                </a>
+                            </div>
                         </div>
-                        <div class="mdl-card__supporting-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Aenan convallis.
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                                View Updates
-                            </a>
-                        </div>
-                    </div>
+                    </td>
                 {{/each}}
             {{/if}}
         </script>
         <script type="text/template" id="index-template">
-            <button class="mdl-button mdl-js-button mdl-button--accent">
+            <button class="mdl-button mdl-js-button mdl-button--accent move-left">
                 <
             </button>
             {{#if index}}
@@ -50,7 +59,7 @@
                     </button>
                 {{/each}}
             {{/if}}
-            <button class="mdl-button mdl-js-button mdl-button--accent">
+            <button class="mdl-button mdl-js-button mdl-button--accent move-right">
                 >
             </button>
         </script>

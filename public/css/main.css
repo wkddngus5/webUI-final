@@ -52,3 +52,20 @@ td a {
     width: 10px;
     padding: 0px;
 }
+
+.todo {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: white;
+    border: none;
+}
+
+
+#index-zone {
+    position: absolute;
+    left: 38%;
+}
+
+.completed-button {
+    width: 130px;
+}

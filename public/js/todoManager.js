@@ -1,29 +1,27 @@
-/**
- * Created by Naver on 2017. 5. 31..
- */
+// /**
+//  * Created by Naver on 2017. 5. 31..
+//  */
 function TodoManager(todoZone) {
   this.todoZone = todoZone;
   this.todoTemplate = Handlebars.compile($("#todo-template").html());
-  this.init.bind(this)(1);
-  console.log('TTTTTOOOOOOOOOOOODDDDDDDOOOOOOO');
+  this.init.call(this, 0);
 }
 
-IndexManager.prototype.init = function (index) {
-  index = 0;
+TodoManager.prototype.init = function(index) {
   $.ajax("http://128.199.76.9:8002/wkddngus5/todo/page?start=" + index + "&limit=3", {
     "type": "get"
-  }).done(makeTodos.bind(this));
+  }).done(function(data, status) {
+    this.makeTodos.call(this, data);
+  }.bind(this));
 }
 
-function makeTodos(todos, status) {
+TodoManager.prototype.makeTodos = function(todos, status) {
   console.log(todos);
   console.log(this);
 
-  var todoElements = $(this.indexTemplate({
+  var todoElements = $(this.todoTemplate({
     "todoElement": todos
   }));
 
-  this.todoZone.append(indexElements);
+  this.todoZone.append(todoElements);
 }
-
-
