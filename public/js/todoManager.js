@@ -1,27 +1,44 @@
 // /**
 //  * Created by Naver on 2017. 5. 31..
 //  */
-function TodoManager(todoZone) {
+function TodoManager(todoZone, ee) {
   this.todoZone = todoZone;
   this.todoTemplate = Handlebars.compile($("#todo-template").html());
-  this.init.call(this, 0);
+  this.init.call(this, 1);
+  this.ee = ee;
+  this.indexCache = [];
+
+  this.ee.addListener("move", this.print.bind(this));
 }
 
 TodoManager.prototype.init = function(index) {
-  $.ajax("http://128.199.76.9:8002/wkddngus5/todo/page?start=" + index + "&limit=3", {
+  console.log('INDEX: ', index);
+  this.index = index;
+  $.ajax("http://128.199.76.9:8002/wkddngus5/todo/page?start=" + (index - 1) * 3 + "&limit=3", {
     "type": "get"
   }).done(function(data, status) {
     this.makeTodos.call(this, data);
+    this.indexCache.push({
+      index : this.index,
+      data : data
+    });
   }.bind(this));
 }
 
 TodoManager.prototype.makeTodos = function(todos, status) {
-  console.log(todos);
-  console.log(this);
-
-  var todoElements = $(this.todoTemplate({
+  this.todoElements = $(this.todoTemplate({
     "todoElement": todos
   }));
+  this.todoZone.empty();
+  this.todoZone.append(this.todoElements);
+}
 
-  this.todoZone.append(todoElements);
+TodoManager.prototype.print = function(data) {
+  for (var i = 0 ; i < this.indexCache.length ; i++) {
+    if(this.indexCache[i].index == data.index) {
+      this.makeTodos.call(this, this.indexCache[i].data);
+      return;
+    }
+  };
+  this.init.call(this, data.index);
 }

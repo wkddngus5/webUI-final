@@ -11,7 +11,7 @@ gulp.task('default', function () {
 
 gulp.task('codeCheck', function() {
   return gulp.src('public/js/*.js')
-    .pipe(jscs())
+    .pipe(jscs({fix: true}))
     .pipe(jscs.reporter());
 });
 

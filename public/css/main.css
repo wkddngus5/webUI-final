@@ -1,3 +1,5 @@
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
 body {
     font: 15px arial, sans-serif;
 }
@@ -5,7 +7,17 @@ body {
 article {
     position: absolute;
     left: 50%;
+    width: 95%;
     transform: translateX(-50%);
+}
+
+#main-title {
+    margin: 50px;
+    font-family: 'Hanna';
+    background-color: white;
+    color: black;
+    font-size: 70px;
+    text-align: center;
 }
 
 h1 {
@@ -17,7 +29,8 @@ h1 {
 }
 
 table {
-    margin: 10px;
+    margin:0 auto;
+    text-align:center;
 }
 
 th, td {
@@ -60,12 +73,24 @@ td a {
     border: none;
 }
 
+#todo-zone {
+    margin:0 auto;
+    text-align:center;
+}
 
 #index-zone {
-    position: absolute;
-    left: 38%;
+    margin:0 auto;
+    text-align:center;
 }
 
 .completed-button {
     width: 130px;
+}
+
+.selected {
+    background-color: rgba(158,158,158,.2);
+}
+
+.mdl-button.disabled {
+    color: black;
 }

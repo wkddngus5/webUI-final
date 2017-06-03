@@ -2,16 +2,15 @@
  * Created by Naver on 2017. 5. 30..
  */
 
-$(document).ready(function() {
+$( document ).ready( function() {
   init();
-});
+} );
 
-var indexZone = $("#index-zone");
-
-var todoZone = $("#todo-zone");
-
+var indexZone = $( "#index-zone" );
+var todoZone = $( "#todo-zone" );
+var eventEmitter = new EventEmitter();
 
 var init = function() {
-  indexManager = new IndexManager(indexZone);
-  todoManager = new TodoManager(todoZone);
+  indexManager = new IndexManager( indexZone, eventEmitter );
+  todoManager = new TodoManager( todoZone, eventEmitter );
 }

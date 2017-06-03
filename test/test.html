@@ -1,15 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>QUnit Example</title>
-    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.3.2.css">
-</head>
-<body>
-<div id="qunit"></div>
-<div id="qunit-fixture"></div>
-<script src="https://code.jquery.com/qunit/qunit-2.3.2.js"></script>
-<script src="tests.js"></script>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>QUnit Example</title>
+        <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.3.2.css">
+    </head>
+    <body>
+        <table>
+            <tr id="todo-zone">
+            </tr>
+        </table>
+
+        <div id="index-zone"></div>
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+
+        <script type="text/template" id="todo-template">
+            {{#if todoElement}}
+            {{#each todoElement}}
+            <td class="todo">
+                <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                        <h2 class="mdl-card__title-text">{{todo}}</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        {{date}}
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        {{#if completed}}
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect completed-button">
+                            COMPLETED
+                        </a>
+                        {{else}}
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect  mdl-button--accent completed-button">
+                            NOT_COMPLETED
+                        </a>
+                        {{/if}}
+                    </div>
+                </div>
+            </td>
+            {{/each}}
+            {{/if}}
+        </script>
+        <script type="text/template" id="index-template">
+            <button class="mdl-button mdl-js-button mdl-button--accent move-left-quintuple">
+                <<
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--accent move-left">
+                <
+            </button>
+            {{#if index}}
+            {{#each index}}
+            <button class="mdl-button mdl-js-button mdl-button--primary index-number" id="{{number}}">
+                {{number}}
+            </button>
+            {{/each}}
+            {{/if}}
+            <button class="mdl-button mdl-js-button mdl-button--accent move-right">
+                >
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--accent move-right-quintuple">
+                >>
+            </button>
+        </script>
+
+        <script type="text/javascript" src="../node_modules/qunitjs/qunit/qunit.js"></script>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../bower_components/handlebars/handlebars.min.js"></script>
+        <script type="text/javascript" src='../bower_components/eventEmitter/EventEmitter.min.js'></script>
+        <script type="text/javascript" src="tests.js"></script>
+        <script type="text/javascript" src="../public/js/indexManager.js"></script>
+        <script type="text/javascript" src="../public/js/todoManager.js"></script>
+    </body>
 </html>
