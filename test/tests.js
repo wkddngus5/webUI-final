@@ -1,74 +1,49 @@
 /**
  * Created by Naver on 2017. 5. 30..
  */
+var eventEmitter = new EventEmitter();
 var indexZone = $( "#index-zone" );
 var todoZone = $( "#todo-zone" );
-var eventEmitter = new EventEmitter();
 
-var indexManager = new IndexManager(indexZone, eventEmitter);
-var todoManager = new TodoManager(todoZone, eventEmitter);
+QUnit.test("indexManager init test", function (assert) {
+  //given
+  var done = assert.async();
 
-indexManager.init();
-todoManager.init();
+  //when
+  var indexManager = new IndexManager(indexZone, eventEmitter);
 
-Qunit.test("indexManager init test", function (assert ) {
-  assert.ok($(".index-number").length == 5);
+  //then
+  setTimeout(function() {
+    if(indexManager.todoCount > 12) {
+      assert.equal($(".index-number").length, 5);
+    } else {
+      assert.equal($(".index-number").length, (parseInt((indexManager.todoCount - 0.1)/3) + 1));
+    }
+
+    assert.ok($(".move-left").hasClass("disabled"));
+    assert.ok($(".move-left-quintuple").hasClass("disabled"));
+    assert.ok($("#1").hasClass("selected"));
+    done();
+  }, 100);
+});
+
+QUnit.test("todoManager init test", function (assert) {
+  //given
+  var done = assert.async();
+
+  //when
+  var todoManager = new TodoManager(todoZone, eventEmitter);
+
+  //then
+  setTimeout(function() {
+    assert.ok($(".todo").length <= 3);
+    done();
+  }, 100);
 });
 
 
-//init(), makeIndex
-
 
 /*
- function IndexManager( indexZone, ee ) {
- this.indexZone = indexZone;
- this.indexTemplate = Handlebars.compile($("#index-template").html());
- this.init.call(this);
- this.HOW_MANY_IN_A_PAGE = 3;
- this.HOW_MANY_IN_ARRANGE = 5;
- this.FIX_VALUE_FOR_REMAINDER = 0.1;
- this.QUINTUPLE = 5;
- this.ee = ee;
- }
-
-IndexManager.prototype.init = function () {
- $.ajax("http://128.199.76.9:8002/wkddngus5/todo/count", {
- "type": "get"
- }).done(function (data, status) {
- this.todoCount = data.cnt;
- this.nowIndex = 1;
- this.makeIndex.bind(this)();
- }.bind(this));
-
- this.indexZone.on("click", this.movePage.bind(this));
- }
-
- IndexManager.prototype.makeIndex = function () {
- this.startIndex = this.calcStartIndex(this.nowIndex);
- this.todoIndexMax = this.calcTodoIndexMax(this.todoCount);
-
- var index = [];
- for (var i = this.startIndex;
- (i <= this.todoIndexMax) && (i < this.startIndex + 5); i++) {
- index.push({number: i});
- }
-
- var indexElements = $(this.indexTemplate({
- "index": index
- }));
- this.indexZone.empty();
- this.indexZone.append( indexElements );
- if (this.nowIndex == 1) {
- $( ".move-left" ).addClass( "disabled" );
- $( ".move-left-quintuple" ).addClass("disabled");
- }
-
- if (this.nowIndex == this.todoIndexMax) {
- $( ".move-right" ).addClass( "disabled" );
- $( ".move-right-quintuple" ).addClass( "disabled" );
- }
- this.markSelected.call( this );
- }
 
  IndexManager.prototype.movePage = function ( e ) {
  console.log("CLICKED! DISABLE?", $( e.target ).hasClass( "disabled" ));
