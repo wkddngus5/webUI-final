@@ -41,47 +41,29 @@ QUnit.test("todoManager init test", function (assert) {
   }, 100);
 });
 
+QUnit.test("move page", function (assert) {
+  //given
+  var done = assert.async();
+  var indexManager = new IndexManager(indexZone, eventEmitter);
 
+  //when
+  setTimeout(function() {
+    $(".move-right").trigger("click");
+  },100);
 
-/*
+  //then
+  setTimeout(function() {
+    assert.equal(indexManager.nowIndex, 2);
+  }, 200);
 
- IndexManager.prototype.movePage = function ( e ) {
- console.log("CLICKED! DISABLE?", $( e.target ).hasClass( "disabled" ));
- if ( $( e.target ).hasClass( "disabled" )) {
- e.preventDefault();
- $( e.target ).css( "background-color", "white" ); //mdl이 자기 마음대로 background를 바꿔서 불가피하게 사용
- return;
- }
- if ( $( e.target ).hasClass( "index-number" )) {
- this.nowIndex = parseInt($(e.target).prop( "id" ));
- } else if ( $( e.target ).hasClass( "move-left" ) ) {
- this.nowIndex--;
- } else if ( $( e.target ).hasClass( "move-right" ) ) {
- this.nowIndex++;
- } else if ( $( e.target ).hasClass( "move-left-quintuple" ) ) {
- this.nowIndex = this.nowIndex > this.QUINTUPLE ? this.nowIndex - this.QUINTUPLE : 1;
- } else if ( $( e.target ).hasClass( "move-right-quintuple" ) ) {
- this.nowIndex = this.nowIndex <= this.todoIndexMax - this.QUINTUPLE ?
- this.nowIndex + this.QUINTUPLE : this.todoIndexMax;
- }
- this.ee.emit( "move", {
- index: this.nowIndex,
- max: this.todoIndexMax
- } );
- this.makeIndex();
- }
+  //when
+  setTimeout(function() {
+    $(".move-right-quintuple").trigger("click");
+  },300);
 
- IndexManager.prototype.calcStartIndex = function ( num ) {
- return parseInt( ( num - this.FIX_VALUE_FOR_REMAINDER )
- / this.HOW_MANY_IN_ARRANGE ) * this.HOW_MANY_IN_ARRANGE + 1;
- }
-
- IndexManager.prototype.calcTodoIndexMax = function ( num ) {
- return parseInt( ( num - this.FIX_VALUE_FOR_REMAINDER ) / this.HOW_MANY_IN_A_PAGE ) + 1;
- }
-
- IndexManager.prototype.markSelected = function () {
- $( "index-number" ).removeClass( "selected" );
- $( "#" + this.nowIndex ).addClass( "selected" );
- }
-*/
+  //then
+  setTimeout(function() {
+    assert.equal(indexManager.nowIndex, 7);
+    done();
+  }, 400);
+});
