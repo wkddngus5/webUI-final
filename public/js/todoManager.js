@@ -18,6 +18,7 @@ TodoManager.prototype.init = function(index) {
     "type": "get"
   }).done(function(data, status) {
     this.makeTodos.call(this, data);
+    //캐싱
     this.indexCache.push({
       index : this.index,
       data : data
@@ -34,6 +35,7 @@ TodoManager.prototype.makeTodos = function(todos, status) {
 }
 
 TodoManager.prototype.print = function(data) {
+  //ajax호출(init())전에 캐싱된 todo data가 있으면 이 정보를 사용
   for (var i = 0 ; i < this.indexCache.length ; i++) {
     if(this.indexCache[i].index == data.index) {
       this.makeTodos.call(this, this.indexCache[i].data);

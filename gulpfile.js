@@ -4,9 +4,17 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var jscs = require('gulp-jscs');
+var ugliy = require('gulp-uglify');
+var pump = require('pump');
 
 gulp.task('default', function () {
-  console.log("hello gulp!");
+  pump([
+    gulp.src('public/js/*.js'),
+    jscs({fix: true}),
+    jscs.reporter(),
+    concat('all.js'),
+    gulp.dest('./dist/')
+  ]);
 });
 
 gulp.task('codeCheck', function() {
@@ -19,4 +27,15 @@ gulp.task('merge', function() {
   return gulp.src('public/js/*.js')
     .pipe(concat('all.js'))
     .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('compress', function (cb) {
+  pump([
+    gulp.src('./dist/all.js'),
+    ugliy(),
+    concat('all.min.js'),
+    gulp.dest('./dist/')
+  ],
+  cb
+  );
 });
